@@ -1,0 +1,24 @@
+#link{
+    display: flex;
+    background-color: teal;
+    justify-content: space-around;
+    font-size: 30px;
+}
+a{
+    color: white;
+}
+form {
+    width: 300px;
+    height: auto;
+    margin: auto;
+    text-align: center;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+input {
+    margin-bottom: 20px;
+}
+
+button {
+    margin-bottom: 20px;
+}
