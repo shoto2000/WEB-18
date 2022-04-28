@@ -15,6 +15,25 @@
     <div><a href="applied.html">Applied Jobs</a></div>
     <div><a href="bookmark.html">Bookmarks</a></div>
   </div>
+  
+  <select id="sortNames" onchange="handleNameSort()">
+    <option>Sort by Name</option>
+    <option value="asc">Ascending</option>
+    <option value="dsc">Descending</option>
+  </select>
+  
+  <select id="sortSalary" onchange="handleSalarySort()">
+    <option>Sort by Salary</option>
+    <option value="htl">High to Low</option>
+    <option value="lth">Low to High</option>
+  </select>
+
+  <select id="sortFilter" onchange="handleFilterSort()">
+    <option>Sort by Filter</option>
+    <option value="FSD">FSD</option>
+    <option value="Backend">Backend</option>
+    <option value="Frontend">Frontend</option>
+  </select>
 
   <main>
     <table>
@@ -36,17 +55,83 @@
 <script>
   //you need to code here
   var jobArr = JSON.parse(localStorage.getItem("jobList"));
-
-  displayData(jobArr)
+  displayData(jobArr);
   
+  // document.querySelector("#sortNames").addEventListener("change"handleNameSort)
+  function handleNameSort(){
+    var selected = document.querySelector("#sortNames").value;
+    console.log(selected)
+
+    if(selected == "asc"){
+      jobArr.sort(function(a,b){
+        var x = a.pname.toUpperCase();
+        var y = b.pname.toUpperCase();
+        if(x > y){
+          return 1;
+        }
+        if(x < y){
+          return -1;
+        }
+  
+        return 0;
+      });
+      console.log(jobArr);
+      displayData(jobArr);
+
+    }
+    if(selected == "dsc"){
+      jobArr.sort(function(a,b){
+        var x = a.pname.toUpperCase();
+        var y = b.pname.toUpperCase();
+        if(x > y){
+          return -1;
+        }
+        if(x < y){
+          return 1;
+        }
+  
+        return 0;
+      });
+      console.log(jobArr);
+      displayData(jobArr)
+    }
+  }
+
+  function handleSalarySort(){
+    var selected = document.querySelector("#sortSalary").value;
+    console.log(selected);
+
+    if(selected == "htl"){
+      jobArr.sort(function(a,b){
+        return b.psalary - a.psalary;
+      });
+      displayData(jobArr);
+    }
+    
+    if(selected =="lth"){
+      jobArr.sort(function(a,b){
+        return a.psalary - b.psalary;
+      });
+      displayData(jobArr);
+    }
+  }
+
+  function handleFilterSort(){
+    var selected = document.querySelector("#sortFilter").value;
+    var filteredList = jobArr.filter(function(el){
+      return el.prole == selected;
+    });
+    displayData(filteredList);
+  }
   // var sum = jobArr.reduce(function(acc,el){
   //   return acc + Number(el.psalary);
   // },0)
 
   var bookArr = JSON.parse(localStorage.getItem("bookmark")) || [];
 
-  function displayData(jobArr) {
-    jobArr.forEach(function (el) {
+  function displayData(data) {
+    document.querySelector("tbody").innerHTML = "";
+    data.forEach(function (el) {
       var tr = document.createElement("tr");
 
       var td1 = document.createElement("td");
